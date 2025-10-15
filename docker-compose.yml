@@ -41,8 +41,8 @@ services:
       - .env
     environment:
       - PORT=3000
-    ports:
-      - "3000:3000"
+    expose:
+      - "3000"
     volumes:
       - ./session_logs:/usr/src/app/session_logs
     healthcheck:
@@ -50,6 +50,17 @@ services:
       interval: 10s
       timeout: 5s
       retries: 5
+    restart: unless-stopped
+
+  nginx:
+    image: nginx:alpine
+    container_name: reachy2-nginx
+    depends_on:
+      - console
+    ports:
+      - "80:80"
+    volumes:
+      - ./nginx.conf:/etc/nginx/nginx.conf:ro
     restart: unless-stopped
 
 networks:
