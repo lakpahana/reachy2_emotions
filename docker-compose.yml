@@ -9,7 +9,13 @@ services:
       - "50051:50051" # gRPC
       - "50065:50065" # optional
     restart: unless-stopped
-
+    command: >
+      start_rviz:=true
+      start_sdk_server:=true
+      fake:=true
+      orbbec:=false
+      gazebo:=true
+      
   emotions:
     build:
       context: .
@@ -23,11 +29,6 @@ services:
       - "5001:5001"   # Flask API
     volumes:
       - ./data:/app/data:ro
-    healthcheck:
-      test: ["CMD-SHELL", "python -c 'import urllib.request; urllib.request.urlopen(\"http://localhost:5001\"); print(\"ok\")' || exit 1"]
-      interval: 10s
-      timeout: 5s
-      retries: 5
     restart: unless-stopped
 
   console:
