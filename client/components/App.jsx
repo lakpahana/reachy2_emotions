@@ -3,6 +3,7 @@ import logo from "/assets/openai-logomark.svg";
 import EventLog from "./EventLog";
 import SessionControls from "./SessionControls";
 import ToolPanel from "./ToolPanel";
+import IntentPanel from "./IntentPanel";
 
 export default function App() {
   const [isSessionActive, setIsSessionActive] = useState(false);
@@ -35,7 +36,9 @@ export default function App() {
     // Set up MediaRecorder to capture the mic audio
     const recorder = new MediaRecorder(ms);
     recorder.ondataavailable = (event) => {
+      console.log("chunked");
       if (event.data.size > 0) {
+        console.log("chuncked");
         setRecordedChunks((prev) => [...prev, event.data]);
       }
     };
@@ -186,13 +189,16 @@ export default function App() {
           </section>
         </section>
         <section className="absolute top-0 w-[380px] right-0 bottom-0 p-4 pt-0 overflow-y-auto">
-          <ToolPanel
-            sendClientEvent={sendClientEvent}
-            sendTextMessage={sendTextMessage}
-            events={events}
-            isSessionActive={isSessionActive}
-          />
-          {recordedAudioURL && (
+          <IntentPanel events={events} isSessionActive={isSessionActive} />
+          <div className="mt-4">
+            <ToolPanel
+              sendClientEvent={sendClientEvent}
+              sendTextMessage={sendTextMessage}
+              events={events}
+              isSessionActive={isSessionActive}
+            />
+          </div>
+          {/* {recordedAudioURL && (
             <div>
               <h2>Recorded Audio</h2>
               <audio controls src={recordedAudioURL}></audio>
@@ -200,7 +206,7 @@ export default function App() {
                 Download Recording
               </a>
             </div>
-          )}
+          )} */}
         </section>
       </main>
     </>
