@@ -5,6 +5,10 @@ This repo includes a docker-compose setup to run:
 - Python emotions Flask server (serves POST /play_emotion on port 5001)
 - Web console (Fastify + React on port 3000)
 
+## Install Docker
+
+Make sure you have Docker and Docker Compose installed on your machine. You can follow the official installation guides for [Docker](https://docs.docker.com/get-docker/) and [Docker Compose](https://docs.docker.com/compose/install/).
+
 ## Quick start
 
 1) Create a .env for the console
@@ -14,6 +18,12 @@ Copy `.env.example` to `.env` and set `OPENAI_API_KEY`.
 2) Build and start
 
 Use Docker Compose to build and start all services in the background.
+
+```bash
+docker-compose up -d --build
+```
+
+Wait for the services to start
 
 3) Open the UIs
 - Reachy noVNC: http://localhost:6080/vnc.html?autoconnect=1&resize=remote
